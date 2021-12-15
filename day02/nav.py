@@ -28,7 +28,38 @@ def parse_line(command):
     if direction == 'up':
         return (-distance, 0)
 
+def parse_line_with_aim(command, aim):
+    direction, distance = command.split(' ')
+    distance = int(distance)
+    # print(direction, distance)
 
+
+    if direction == 'down':
+        return (0, 0, distance)
+
+    if direction == 'up':
+        return (0, 0, -distance)
+
+    if direction == 'forward':
+
+        return (distance * aim, distance, 0)
+
+
+def get_position_with_aim():
+    depth = 0
+    horizontal = 0
+    aim = 0
+
+    for line in lines:
+        delta_depth, delta_hor, delta_aim = parse_line_with_aim(line, aim)
+        print("delta_depth{}, delta_hor{}, delta_aim{}".format(delta_depth, delta_hor, delta_aim))
+        depth += delta_depth
+        horizontal += delta_hor
+        aim += delta_aim
+        print("depth {}, hor {}, aim{}".format(depth, horizontal, aim))
+
+    print (depth, horizontal)
+    print(depth * horizontal)
 
 def get_position():
     depth = 0
@@ -43,4 +74,5 @@ def get_position():
     print(depth * horizontal)
 
 if __name__ == '__main__':
-    get_position()
+    # get_position()
+    get_position_with_aim()
