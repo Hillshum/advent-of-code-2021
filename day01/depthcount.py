@@ -16,14 +16,15 @@ with open('input.txt', 'r') as f:
 # '260',
 # '263']
 
-count = 0
-for i, line in enumerate(lines):
-    if i is 0:
-        continue
-    prev = int(lines[i-1].strip())
-    curr = int(line.strip())
-    print(curr, prev)
-    if curr > prev:
-        count += 1
+def part1():
+    count = 0
+    for i, line in enumerate(lines):
+        if i is 0:
+            continue
+        prev = int(lines[i-1].strip())
+        curr = int(line.strip())
+        print(curr, prev)
+        if curr > prev:
+            count += 1
 
-print(count)
+    print(count)
