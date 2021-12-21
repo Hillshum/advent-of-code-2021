@@ -1,4 +1,5 @@
 from collections import defaultdict
+from itertools import filterfalse
 
 
 input_string = """0,9 -> 5,9
@@ -45,7 +46,10 @@ def is_straight(coords):
     return False
 
 straight_lines = filter(is_straight, coordinates)
-# print(len([*straight_lines]))
+coordinates = map(parse_line, input_string.strip().split('\n'))
+diagonal_lines = filterfalse(is_straight, coordinates)
+
+# print(len([*diagonal_lines]))
 
 def get_rangestep(s, e):
     if e < s:
@@ -62,6 +66,18 @@ for line in straight_lines:
             vents[f"{i}x{j}"] += 1
     # print(vents)
 
+
+for line in diagonal_lines:
+    x_direction = get_rangestep(line[START][X], line[END][X])
+
+    y_direction = get_rangestep(line[START][Y], line[END][Y])
+    x_iter = range(line[START][X], line[END][X] + x_direction, x_direction)
+    y_iter =  range(line[START][Y], line[END][Y] + y_direction, y_direction)
+
+    points = zip(x_iter, y_iter)
+
+    for (i, j) in points:
+        vents[f"{i}x{j}"] += 1
 # print(vents)
 
 dangerous_vents = filter(lambda x: x>=2, vents.values())
